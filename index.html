@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06111b">
+<title>OrbitTV Pro</title>
+<style>
+:root{--bg:#04101a;--panel:#081a29;--panel2:#0c2638;--line:#17394e;--text:#eefaff;--muted:#8eb0c3;--accent:#43d8ff;--danger:#ff6d80}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 85% 0,#0d3858 0,transparent 32rem),var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}.top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 3vw;background:#05111ddd;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:54px;height:54px;object-fit:contain}.brand strong{display:block;font-size:21px}.brand span{color:var(--muted);font-size:13px}
+.actions,.toolbar,.urlrow,.buttons{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:11px;padding:10px 14px;background:var(--panel2);color:var(--text);font-weight:750;cursor:pointer}.btn:hover{filter:brightness(1.12)}.primary{border:0;background:linear-gradient(135deg,#3bd5ff,#8cecff);color:#00131c}.danger{background:#35151d;color:#ffdce2;border-color:#713541}
+main{width:min(1500px,94vw);margin:24px auto 60px}.card{padding:20px;margin-bottom:16px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#0a1e2e,#06131f)}.hero{display:grid;grid-template-columns:1fr auto;gap:26px;padding:34px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:900;color:#78eaff}h1{font-size:clamp(38px,6vw,72px);line-height:.96;margin:8px 0 12px}p{color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,120px);gap:10px;align-content:center}.stats article{text-align:center;padding:21px 10px;border:1px solid var(--line);border-radius:16px;background:#071723}.stats b,.stats span{display:block}.stats b{font-size:30px;color:#7ceaff}.stats span{font-size:12px;color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px}.status{padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}.status.ok{color:#9dffcf;border-color:#2c6b50}.status.bad{color:#ffabb7;border-color:#753541}
+.urlrow input,.toolbar input{flex:1;min-width:240px}input,select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:#05131f;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent)}details{margin-top:12px;color:var(--muted)}summary{cursor:pointer}.settings{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;padding-top:12px}
+.tabs{display:flex;gap:8px;margin:18px 0 10px}.tab{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#0a2031;color:var(--text);font-weight:800;cursor:pointer}.tab.active{background:var(--accent);color:#00131b}.view{display:none}.view.active{display:block}
+.tablewrap{overflow:auto;max-height:62vh;border:1px solid var(--line);border-radius:15px}table{width:100%;min-width:1080px;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid #102e41;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#0d2a40;color:#c9f3ff}.urlcell{max-width:320px;word-break:break-all;color:var(--muted)}.rowbtns{display:flex;gap:6px}.rowbtns .btn{padding:7px 9px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}label{display:grid;gap:7px;margin-bottom:12px}.wide{grid-column:1/-1}pre{white-space:pre-wrap;word-break:break-all;padding:16px;border:1px solid var(--line);border-radius:12px;background:#04111c;color:#73eaff}
+dialog{width:min(720px,94vw);border:1px solid var(--line);border-radius:20px;background:#091827;color:var(--text)}dialog::backdrop{background:#000a}#toast{position:fixed;right:20px;bottom:20px;z-index:50;padding:13px 16px;border-radius:12px;background:#123c57;opacity:0;transform:translateY(12px);transition:.2s;pointer-events:none}#toast.show{opacity:1;transform:none}
+@media(max-width:880px){.hero{display:block}.stats{grid-template-columns:repeat(3,1fr);margin-top:20px}.settings,.grid{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:620px){.top{position:static;flex-direction:column;align-items:flex-start}.actions{width:100%}.actions .btn{flex:1}.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <img src="" alt="" style="display:none">
+    <div><strong>OrbitTV Pro</strong><span>GitHub Edition</span></div>
+  </div>
+  <div class="actions">
+    <label class="btn primary">Add M3U File<input id="fileInput" hidden type="file" accept=".m3u,.m3u8,text/plain"></label>
+    <button class="btn" id="downloadBtn">Download M3U</button>
+  </div>
+</header>
+<main>
+<section class="card hero">
+  <div><span class="eyebrow">M3U TO XTREAM CONVERTER</span><h1>The Ultimate M3U Playlist Editor</h1><p>Upload, search, edit and export M3U playlists. Remote lists can be loaded through the optional Cloudflare Worker.</p></div>
+  <div class="stats"><article><b id="channelCount">0</b><span>Channels</span></article><article><b id="groupCount">0</b><span>Groups</span></article><article><b id="duplicateCount">0</b><span>Duplicates</span></article></div>
+</section>
+<section class="card">
+  <div class="sectionhead"><div><span class="eyebrow">REMOTE PLAYLIST</span><h2>Load M3U URL</h2></div><span class="status" id="workerStatus">Worker not checked</span></div>
+  <div class="urlrow"><input id="remoteUrl" placeholder="Paste an M3U or Xtream get.php URL"><button class="btn primary" id="loadUrlBtn">Load Playlist</button></div>
+  <details><summary>Worker settings</summary><div class="settings"><label>Cloudflare Worker URL<input id="workerUrl" placeholder="https://orbittv-api.your-name.workers.dev"></label><div class="buttons"><button class="btn" id="saveWorkerBtn">Save</button><button class="btn" id="testWorkerBtn">Test</button></div></div></details>
+</section>
+<nav class="tabs"><button class="tab active" data-view="editor">Playlist Editor</button><button class="tab" data-view="xtream">Xtream Codes</button><button class="tab" data-view="raw">Raw M3U</button></nav>
+<section id="editor" class="card view active">
+  <div class="toolbar"><input id="search" placeholder="Search name, group, TVG ID or URL"><button class="btn primary" id="searchBtn">Search</button><button class="btn" id="resetBtn">Reset</button><select id="groupFilter"><option value="">All groups</option></select><button class="btn" id="addBtn">Add Channel</button><button class="btn" id="dedupeBtn">Remove Duplicates</button><button class="btn danger" id="clearBtn">Clear All</button></div>
+  <div class="tablewrap"><table><thead><tr><th>Name</th><th>Group</th><th>TVG ID</th><th>Logo</th><th>Stream URL</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<section id="xtream" class="card view">
+  <span class="eyebrow">XTREAM CODES</span><h2>Convert and copy credentials</h2>
+  <label>M3U URL<textarea id="xtreamUrl" rows="3" placeholder="Paste a get.php URL"></textarea></label>
+  <div class="grid"><label>Server<input id="server" placeholder="https://server.example:8080"></label><label>Username<input id="username"></label><label>Password<input id="password"></label><label>Output<select id="output"><option value="ts">TS</option><option value="m3u8">M3U8</option></select></label></div>
+  <div class="buttons"><button class="btn primary" id="extractBtn">Extract</button><button class="btn" id="generateBtn">Generate URL</button><button class="btn" id="copyCodesBtn">Copy Xtream Codes</button><button class="btn" id="copyUrlBtn">Copy M3U URL</button></div><pre id="generated">No URL generated.</pre>
+</section>
+<section id="raw" class="card view">
+  <div class="sectionhead"><div><span class="eyebrow">RAW DATA</span><h2>M3U source</h2></div><button class="btn" id="applyRawBtn">Apply Raw M3U</button></div>
+  <textarea id="rawText" rows="22" spellcheck="false">#EXTM3U</textarea>
+</section>
+</main>
+<dialog id="channelDialog"><form id="channelForm"><h2 id="channelTitle">Add Channel</h2><div class="grid"><label>Name<input id="cName" required></label><label>Group<input id="cGroup"></label><label>TVG ID<input id="cTvg"></label><label>Logo URL<input id="cLogo"></label><label class="wide">Stream URL<input id="cUrl" required></label></div><div class="buttons" style="justify-content:flex-end"><button class="btn" type="button" id="cancelChannel">Cancel</button><button class="btn primary">Save Channel</button></div></form></dialog>
+<div id="toast"></div>
+<script>
+const state={channels:[],editing:null},$=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2500)}
+function parseM3U(text){const lines=String(text).replace(/^\uFEFF/,"").split(/\r?\n/),out=[];let p=null;for(let raw of lines){const line=raw.trim();if(!line)continue;if(line.startsWith("#EXTINF")){const a={};for(const m of line.matchAll(/([\w-]+)="([^"]*)"/g))a[m[1]]=m[2];const i=line.indexOf(",");p={name:i>=0?line.slice(i+1).trim():(a["tvg-name"]||"Untitled"),group:a["group-title"]||"",tvg:a["tvg-id"]||"",logo:a["tvg-logo"]||"",url:""}}else if(!line.startsWith("#")){p=p||{name:"Untitled",group:"",tvg:"",logo:"",url:""};p.url=line;out.push(p);p=null}}return out}
+function serialize(){const q=s=>String(s??"").replaceAll('"',"'").replaceAll("\n"," ");return"#EXTM3U\n"+state.channels.map(c=>{const a=[];if(c.tvg)a.push(`tvg-id="${q(c.tvg)}"`);if(c.name)a.push(`tvg-name="${q(c.name)}"`);if(c.logo)a.push(`tvg-logo="${q(c.logo)}"`);if(c.group)a.push(`group-title="${q(c.group)}"`);return`#EXTINF:-1${a.length?" "+a.join(" "):""},${q(c.name)}\n${c.url}`}).join("\n")+"\n"}
+function update(){const groups=[...new Set(state.channels.map(c=>c.group).filter(Boolean))].sort();const cur=$("#groupFilter").value;$("#groupFilter").innerHTML='<option value="">All groups</option>'+groups.map(g=>`<option>${esc(g)}</option>`).join("");if(groups.includes(cur))$("#groupFilter").value=cur;const seen=new Set();let d=0;for(const c of state.channels){const k=c.url.trim().toLowerCase();if(k&&seen.has(k))d++;if(k)seen.add(k)}$("#channelCount").textContent=state.channels.length;$("#groupCount").textContent=groups.length;$("#duplicateCount").textContent=d;$("#rawText").value=serialize();render()}
+function render(){const q=$("#search").value.trim().toLowerCase(),g=$("#groupFilter").value;const rows=state.channels.map((c,i)=>({c,i})).filter(({c})=>(!q||[c.name,c.group,c.tvg,c.logo,c.url].join(" ").toLowerCase().includes(q))&&(!g||c.group===g));$("#rows").innerHTML=rows.length?rows.map(({c,i})=>`<tr><td>${esc(c.name)}</td><td>${esc(c.group)}</td><td>${esc(c.tvg)}</td><td class="urlcell">${esc(c.logo)}</td><td class="urlcell">${esc(c.url)}</td><td><div class="rowbtns"><button class="btn" onclick="editChannel(${i})">Edit</button><button class="btn danger" onclick="deleteChannel(${i})">Delete</button></div></td></tr>`).join(""):'<tr><td colspan="6" style="text-align:center;padding:44px;color:#8eb0c3">No channels found.</td></tr>'}
+function openChannel(i=null){state.editing=i;const c=i===null?{name:"",group:"",tvg:"",logo:"",url:""}:state.channels[i];$("#channelTitle").textContent=i===null?"Add Channel":"Edit Channel";$("#cName").value=c.name;$("#cGroup").value=c.group;$("#cTvg").value=c.tvg;$("#cLogo").value=c.logo;$("#cUrl").value=c.url;$("#channelDialog").showModal()}
+window.editChannel=i=>openChannel(i);window.deleteChannel=i=>{state.channels.splice(i,1);update();toast("Channel deleted")};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab,.view").forEach(x=>x.classList.remove("active"));b.classList.add("active");$("#"+b.dataset.view).classList.add("active")});
+$("#fileInput").onchange=async e=>{const f=e.target.files[0];if(f){state.channels=parseM3U(await f.text());update();toast(`Loaded ${state.channels.length} channels`)}e.target.value=""};
+$("#downloadBtn").onclick=()=>{if(!state.channels.length)return toast("No channels to download");const u=URL.createObjectURL(new Blob([serialize()],{type:"audio/x-mpegurl"})),a=document.createElement("a");a.href=u;a.download="orbittv-playlist.m3u";a.click();URL.revokeObjectURL(u)};
+$("#searchBtn").onclick=render;$("#resetBtn").onclick=()=>{$("#search").value="";$("#groupFilter").value="";render()};$("#groupFilter").onchange=render;$("#addBtn").onclick=()=>openChannel();
+$("#channelForm").onsubmit=e=>{e.preventDefault();const c={name:$("#cName").value.trim(),group:$("#cGroup").value.trim(),tvg:$("#cTvg").value.trim(),logo:$("#cLogo").value.trim(),url:$("#cUrl").value.trim()};if(!c.name||!c.url)return toast("Name and URL are required");if(state.editing===null)state.channels.push(c);else state.channels[state.editing]=c;$("#channelDialog").close();update();toast("Channel saved")};$("#cancelChannel").onclick=()=>$("#channelDialog").close();
+$("#dedupeBtn").onclick=()=>{const s=new Set(),n=state.channels.length;state.channels=state.channels.filter(c=>{const k=c.url.trim().toLowerCase();if(k&&s.has(k))return false;if(k)s.add(k);return true});update();toast(`Removed ${n-state.channels.length} duplicates`)};$("#clearBtn").onclick=()=>{if(confirm("Clear all channels?")){state.channels=[];update()}};$("#applyRawBtn").onclick=()=>{state.channels=parseM3U($("#rawText").value);update();toast(`Applied ${state.channels.length} channels`)};
+function workerUrl(){return(localStorage.getItem("orbittvWorkerUrl")||"").replace(/\/+$/,"")}$("#workerUrl").value=workerUrl();
+async function testWorker(){const w=workerUrl();if(!w)return toast("Enter and save Worker URL");$("#workerStatus").textContent="Checking…";try{const r=await fetch(w+"/api/health"),j=await r.json();if(!r.ok||!j.ok)throw 0;$("#workerStatus").textContent="Worker online";$("#workerStatus").className="status ok"}catch{$("#workerStatus").textContent="Worker unavailable";$("#workerStatus").className="status bad"}}
+$("#saveWorkerBtn").onclick=()=>{localStorage.setItem("orbittvWorkerUrl",$("#workerUrl").value.trim().replace(/\/+$/,""));toast("Worker URL saved");testWorker()};$("#testWorkerBtn").onclick=testWorker;
+$("#loadUrlBtn").onclick=async()=>{const w=workerUrl(),url=$("#remoteUrl").value.trim();if(!w)return toast("Save Worker URL first");if(!url)return toast("Enter playlist URL");try{const r=await fetch(w+"/api/fetch",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url})}),j=await r.json();if(!r.ok||!j.ok)throw new Error(j.error||"Load failed");state.channels=parseM3U(j.content);update();toast(`Loaded ${state.channels.length} channels`)}catch(e){toast(e.message)}};
+function gen(){const s=$("#server").value.trim().replace(/\/+$/,""),u=$("#username").value.trim(),p=$("#password").value.trim(),o=$("#output").value;if(!s||!u||!p)return toast("Server, username and password are required");const x=`${s}/get.php?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&type=m3u_plus&output=${o}`;$("#generated").textContent=x;$("#xtreamUrl").value=x;return x}
+$("#extractBtn").onclick=()=>{try{const u=new URL($("#xtreamUrl").value.trim());$("#server").value=u.protocol+"//"+u.host;$("#username").value=u.searchParams.get("username")||"";$("#password").value=u.searchParams.get("password")||"";$("#output").value=u.searchParams.get("output")==="m3u8"?"m3u8":"ts";gen();toast("Xtream Codes extracted")}catch{toast("Invalid URL")}};$("#generateBtn").onclick=gen;$("#copyCodesBtn").onclick=async()=>{await navigator.clipboard.writeText(`Server: ${$("#server").value}\nUsername: ${$("#username").value}\nPassword: ${$("#password").value}`);toast("Xtream Codes copied")};$("#copyUrlBtn").onclick=async()=>{const x=$("#generated").textContent;if(x==="No URL generated.")return toast("Generate URL first");await navigator.clipboard.writeText(x);toast("M3U URL copied")};
+update();if(workerUrl())testWorker();
+</script>
+</body>
+</html>
