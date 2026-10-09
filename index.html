@@ -84,5 +84,6 @@ function gen(){const s=$("#server").value.trim().replace(/\/+$/,""),u=$("#userna
 $("#extractBtn").onclick=()=>{try{const u=new URL($("#xtreamUrl").value.trim());$("#server").value=u.protocol+"//"+u.host;$("#username").value=u.searchParams.get("username")||"";$("#password").value=u.searchParams.get("password")||"";$("#output").value=u.searchParams.get("output")==="m3u8"?"m3u8":"ts";gen();toast("Xtream Codes extracted")}catch{toast("Invalid URL")}};$("#generateBtn").onclick=gen;$("#copyCodesBtn").onclick=async()=>{await navigator.clipboard.writeText(`Server: ${$("#server").value}\nUsername: ${$("#username").value}\nPassword: ${$("#password").value}`);toast("Xtream Codes copied")};$("#copyUrlBtn").onclick=async()=>{const x=$("#generated").textContent;if(x==="No URL generated.")return toast("Generate URL first");await navigator.clipboard.writeText(x);toast("M3U URL copied")};
 update();if(workerUrl())testWorker();
 </script>
+<div style="padding:16px;text-align:center"><a href="tel:+38669338202" style="display:inline-block;padding:10px 12px;color:inherit;white-space:nowrap;text-decoration:underline">+386 69 338 202</a></div>
 </body>
 </html>
